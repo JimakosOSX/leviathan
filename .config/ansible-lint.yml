@@ -1,3 +1,4 @@
 warn_list:  # or 'skip_list' to silence them completely
   - yaml[indentation]  # Violations reported by yamllint.
   - yaml[trailing-spaces]  # Violations reported by yamllint.
+  - yaml[line-length] 

@@ -1,0 +1,12 @@
+---
+server_fqdn: "clusters.gr"
+server_name: "clusters"
+server_www_fqdn: "www.{{ server_fqdn }}"
+certbot_admin_email: "jim.makris1605@gmail.com"
+packages:
+  - certbot
+  - apache2
+  - python3-certbot-apache
+
+services:
+  - apache2

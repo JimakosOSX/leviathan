@@ -2,3 +2,31 @@
 - name: Update cache
   ansible.builtin.apt:
     update_cache: true
+  when: Setup
+
+- name: Install dependencies
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ packages }}"
+
+- name: Update hosts file
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    insertafter: '^127.0.0.1 localhost$'
+    line: "{{ ansible_ssh_host }} {{ server_fqdn }} {{ server_name }}"
+
+- name: Check if certificate exists
+  ansible.builtin.stat:
+    path: "/etc/letsencrypt/live/{{ server_www_fqdn }}/cert.pem"
+  register: le_cert
+
+- name: Stop services for certbot
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: stopped
+  loop: "{{ services }}"
+
+- name: Generate new certificate if one doesn't exist.
+  ansible.builtin.command: "certbot certonly --standalone --noninteractive --agree-tos --email {{ certbot_admin_email }} -d {{ server_www_fqdn }},{{ server_fqdn }}"
+  when: not le_cert.stat.exists 
