@@ -1,5 +1,5 @@
 ---
-# passwords here are dummy values for you to replace
+# most vars here are dummy values for you to replace
 mysql_root_password: madicetea
 mysql_databases:
   - name: mailserver
@@ -8,3 +8,8 @@ mysql_users:
   - name: mailuser
     password: madicetea
     priv: "mailserver.*:ALL"
+
+server_fqdn: "clusters.gr"
+server_name: "clusters"
+server_www_fqdn: "www.{{ server_fqdn }}"
+certbot_admin_email: "jim.makris1605@gmail.com"

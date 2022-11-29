@@ -5,4 +5,5 @@
   - ../vars/main.yml
   roles: 
     # - { role: general, Setup: false }
-    - role: geerlingguy.mysql
+    # - role: geerlingguy.mysql
+    - role: mysql
