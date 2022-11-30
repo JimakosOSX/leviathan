@@ -1,13 +1,30 @@
 ---
 # most vars here are dummy values for you to replace
 mysql_root_password: madicetea
+
+mysql_database: mailserver 
+
 mysql_databases:
   - name: mailserver
+
+domains: 
+  - { name: "clusters.gr", domain_id: 1 }
 
 mysql_users:
   - name: mailuser
     password: madicetea
     priv: "mailserver.*:ALL"
+
+mail_users:
+  - name: george
+    password: verystrongpassword
+    domain_id: 1
+  - name: jim
+    password: verystrongpassword
+    domain_id: 1
+  - name: tsikimitsos
+    password: verystrongpassword
+    domain_id: 1
 
 server_fqdn: "clusters.gr"
 server_name: "clusters"

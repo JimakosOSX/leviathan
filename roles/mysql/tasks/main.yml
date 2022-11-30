@@ -1,12 +1,12 @@
---- 
-- name: Run several insert queries against DBs in single transaction
-  community.mysql.mysql_query:
-    login_db: "{{ item.name }}"
-    query:
-    - USE mailserver;
-    - CREATE TABLE IF NOT EXISTS `virtual_domains` (`id` int(11) NOT NULL auto_increment,`name` varchar(50) NOT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-    - CREATE TABLE IF NOT EXISTS `virtual_users` (`id` int(11) NOT NULL auto_increment,`domain_id` int(11) NOT NULL,`password` varchar(106) NOT NULL,`email` varchar(100) NOT NULL,PRIMARY KEY (`id`),UNIQUE KEY `email` (`email`), FOREIGN KEY (domain_id) REFERENCES virtual_domains(id) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-    - CREATE TABLE IF NOT EXISTS `virtual_aliases` (`id` int(11) NOT NULL auto_increment,`domain_id` int(11) NOT NULL,`source` varchar(100) NOT NULL,`destination` varchar(100) NOT NULL,PRIMARY KEY (`id`), FOREIGN KEY (domain_id) REFERENCES virtual_domains(id) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-    - INSERT INTO mailserver.virtual_domains (name) SELECT '{{ server_fqdn }}' WHERE NOT EXISTS (SELECT name FROM mailserver.virtual_domains WHERE name = '{{ server_fqdn }}');
-    single_transaction: true
-  loop: "{{ mysql_databases }}"
+---
+- name: Init tables
+  ansible.builtin.include_tasks: init_tables.yml
+
+- name: Add users
+  ansible.builtin.include_tasks: add_users.yml
+  loop: "{{ mail_users }}"
+  loop_control:
+    loop_var: outer_item
+
+- name: Add aliases 
+  ansible.builtin.include_tasks: add_aliases.yml
