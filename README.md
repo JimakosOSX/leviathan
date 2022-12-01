@@ -27,3 +27,4 @@ TODO 📝
 1. DKIM intergration
 2. Check if let's Encrypt uses the same www_fqdn or simply fqdn.
 3. Restore backup (tarball) if present on test folder.
+4. Add Apache installtion (with file placement)
