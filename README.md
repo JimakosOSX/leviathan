@@ -15,7 +15,8 @@ Postfix, Dovecot, MariaDB, Let's Encrypt, Apache
 
 ## Information
 Testing this on Debian 11 x64.
-Status: Working
+
+Status: Working ✅ 
 
 TODO 
 
