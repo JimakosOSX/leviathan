@@ -1,6 +1,5 @@
-# Ansible role to set-up an Ubuntu mail server
-Automating the installation of a mail server using Ubuntu 22.04
-
+# Ansible role to set-up a Linux mail server
+Automating the installation of a mail server
 ## Dependencies
 Run
 
