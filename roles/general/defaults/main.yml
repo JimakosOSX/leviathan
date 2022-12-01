@@ -4,6 +4,7 @@ packages:
   - apache2
   - python3-certbot-apache
   - postfix 
+  - postfix-policyd-spf-python
   - postfix-mysql 
   - dovecot-core 
   - dovecot-imapd 

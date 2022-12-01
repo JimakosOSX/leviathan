@@ -1,0 +1,105 @@
+---
+- name: Stop dovecot
+  ansible.builtin.systemd:
+    name: dovecot
+    state: stopped
+
+- name: Install dovecot.conf
+  ansible.builtin.template:
+    src: dovecot.conf.j2
+    dest: /etc/dovecot/dovecot.conf
+
+- name: Replace mail_location in 10-mail.conf
+  ansible.builtin.lineinfile:
+    path: /etc/dovecot/conf.d/10-mail.conf
+    regexp: '^mail_location.*'
+    line: 'mail_location = maildir:/var/mail/vhosts/%d/%n/'
+
+- name: Ensure group vmail exists
+  ansible.builtin.group:
+    name: vmail
+    state: present
+    gid: 50000
+
+- name: Ensure user vmail exists
+  ansible.builtin.user:
+    name: vmail
+    shell: /sbin/nologin
+    groups: vmail
+    state: present
+    expires: -1
+    home: /var/mail
+
+- name: Create vhosts directory
+  ansible.builtin.file:
+    path: "/var/mail/vhosts/{{ server_fqdn }}"
+    state: directory
+    owner: vmail
+    group: vmail
+    recurse: yes
+
+- name: Disable plaintext_auth
+  ansible.builtin.lineinfile:
+    path: /etc/dovecot/conf.d/10-auth.conf
+    regexp: '^#disable_plaintext_auth.*'
+    line: 'disable_plaintext_auth = yes'
+
+- name: Change auth mechanisms
+  ansible.builtin.lineinfile:
+    path: /etc/dovecot/conf.d/10-auth.conf
+    regexp: '^auth_mechanisms = plain'
+    line: 'auth_mechanisms = plain login'
+
+- name: Enable authorization sql external 
+  ansible.builtin.lineinfile:
+    path: /etc/dovecot/conf.d/10-auth.conf
+    regexp: '^#!include auth-sql.conf.ext'
+    line: '!include auth-sql.conf.ext'
+
+- name: Install auth-sql.conf.ext
+  ansible.builtin.template:
+    src: auth-sql.conf.ext.j2
+    dest: /etc/dovecot/conf.d/auth-sql.conf.ext
+
+- name: Install dovecot-sql.conf.ext
+  ansible.builtin.template:
+    src: dovecot-sql.conf.ext.j2
+    dest: /etc/dovecot/dovecot-sql.conf.ext
+
+- name: Tighten dovecot dir permissions
+  ansible.builtin.file:
+    path: /etc/dovecot
+    state: directory
+    recurse: yes
+    mode: '0750'
+    owner: vmail
+    group: dovecot
+
+- name: Install 10-master.conf
+  ansible.builtin.template:
+    src: 10-master.conf.j2
+    dest: /etc/dovecot/conf.d/10-master.conf
+
+- name: Require SSL/TLS support
+  ansible.builtin.lineinfile:
+    path: /etc/dovecot/conf.d/10-ssl.conf
+    regexp: '^ssl = yes'
+    line: 'ssl = required'
+
+- name: Change SSL cert
+  ansible.builtin.lineinfile:
+    path: /etc/dovecot/conf.d/10-ssl.conf
+    regexp: '^ssl_cert =.*'
+    line: 'ssl_cert = </etc/letsencrypt/live/{{ server_www_fqdn }}/fullchain.pem'
+
+- name: Change SSL key
+  ansible.builtin.lineinfile:
+    path: /etc/dovecot/conf.d/10-ssl.conf
+    regexp: '^ssl_key =.*'
+    line: 'ssl_key = </etc/letsencrypt/live/{{ server_www_fqdn }}/privkey.pem'
+
+- name: Restart dovecot
+  ansible.builtin.systemd:
+    name: dovecot
+    state: restarted
+

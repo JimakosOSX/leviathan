@@ -1,1 +1,9 @@
 ---
+- name: Create virtual aliases
+  community.mysql.mysql_query:
+    login_db: "{{ mysql_database }}"
+    query:
+      - USE mailserver;
+      - IF "{{ outer_item.domain_id }}"  = "{{ item.domain_id }}" THEN INSERT INTO virtual_aliases (domain_id, source, destination) SELECT '{{ outer_item.domain_id }}', '{{ outer_item.source }}@{{ item.name }}', '{{ outer_item.dest }}@{{ item.name }}' WHERE NOT EXISTS (SELECT source FROM mailserver.virtual_aliases WHERE source = '{{ outer_item.source }}@{{ item.name }}'); END IF;
+    single_transaction: true
+  loop: "{{ domains }}"

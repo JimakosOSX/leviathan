@@ -1,0 +1,13 @@
+---
+# Handlers for postfix
+- name: Stop postfix
+  systemd:
+    name: postfix
+    state: stopped
+  listen: "Stop postfix"
+
+- name: Restart postfix
+  systemd:
+    name: postfix
+    state: restarted
+  listen: "Restart postfix"

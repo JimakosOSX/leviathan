@@ -10,3 +10,8 @@
 
 - name: Add aliases 
   ansible.builtin.include_tasks: add_aliases.yml
+  loop: "{{ mail_aliases }}"
+  loop_control:
+    loop_var: outer_item
+
+

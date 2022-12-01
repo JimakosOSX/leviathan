@@ -7,3 +7,5 @@
     - { role: general, Setup: true }
     - role: geerlingguy.mysql
     - role: mysql
+    - role: postfix
+    - role: dovecot

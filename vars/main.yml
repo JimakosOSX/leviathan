@@ -8,23 +8,26 @@ domains:
 
 mysql_users:
   - name: mailuser
-    password: madicetea
+    password: verystrongpassword
     priv: "mailserver.*:ALL"
 
 mysql_databases:
   - name: mailserver
 
-mysql_root_password: madicetea
+mysql_root_password: verystrongpassword
 
 mail_users:
   - name: george
     password: verystrongpassword
     domain_id: 1
-  - name: jim
-    password: verystrongpassword
-    domain_id: 1
-  - name: tsikimitsos
-    password: verystrongpassword
+      
+# The user used must be the same under mysql_users
+mail_unprivileged_user: { name: "mailuser", password: "verystrongpassword" }
+
+# No need to use full address. The domain will be added based on domain_id.
+mail_aliases:
+  - source: "postmaster"
+    dest: "jim"
     domain_id: 1
 
 server_fqdn: "clusters.gr"
