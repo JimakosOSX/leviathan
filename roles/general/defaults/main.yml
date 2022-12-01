@@ -1,0 +1,24 @@
+---
+packages:
+  - certbot
+  - apache2
+  - python3-certbot-apache
+  - postfix 
+  - postfix-policyd-spf-python
+  - postfix-mysql 
+  - dovecot-core 
+  - dovecot-imapd 
+  - dovecot-pop3d 
+  - dovecot-lmtpd 
+  - dovecot-mysql 
+  - mariadb-server
+
+services:
+  - apache2
+  - postfix
+  - dovecot
+  - mariadb
+
+postfix_debconf_params:
+  - { question: 'postfix/main_mailer_type', value: "Internet Site" }
+  - { question: 'postfix/mailname', value: "{{ server_fqdn }}" }

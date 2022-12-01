@@ -1,0 +1,11 @@
+---
+- hosts: servers
+  remote_user: root
+  vars_files:
+  - ../vars/main.yml
+  roles: 
+    - { role: general, Setup: true }
+    - role: geerlingguy.mysql
+    - role: mysql
+    - role: postfix
+    - role: dovecot

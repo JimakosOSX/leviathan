@@ -1,0 +1,5 @@
+user = {{ mail_unprivileged_user.name }}
+password = {{ mail_unprivileged_user.password }}
+hosts = 127.0.0.1
+dbname = {{ mysql_database }}
+query = SELECT email FROM virtual_users WHERE email='{{ '%' }}s'
