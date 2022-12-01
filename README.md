@@ -6,6 +6,11 @@ Run
 
 `ansible-galaxy collection install geerlingguy.mysql`
 
+Fill `vars/main.yml` with your own credentials.
+
+Fill `test/inventory` with the desired server.
+
+Run `test/test.yml`.
 
 ## Tools
 Ansible
@@ -18,7 +23,8 @@ Testing this on Debian 11 x64.
 
 Status: Working ✅ 
 
-TODO 
+TODO 📝
 
 1. DKIM intergration
 2. Check if let's Encrypt uses the same www_fqdn or simply fqdn.
+3. Restore backup (tarball) if present on test folder.
