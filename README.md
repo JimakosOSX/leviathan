@@ -1,4 +1,4 @@
-# Ansible role to set-up a Linux mail server
+# Ansible roles to set-up a Linux mail server
 Automating the installation of a mail server
 ## Dependencies
 Run
