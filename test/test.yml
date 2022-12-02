@@ -10,7 +10,7 @@
 
 - hosts: new
   remote_user: ubuntu
-  become: yes
+  become: true
   vars_files:
   - ../vars/main.yml
   roles: 
@@ -19,4 +19,4 @@
     - role: postfix
     - role: dovecot
     - role: firewalld
-    - { role: general, restore_backup: true }
+      #    - { role: general, restore_backup: true }

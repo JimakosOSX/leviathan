@@ -1,5 +1,5 @@
 ---
-- name: permit traffic in default zone for needed services
+- name: Permit traffic in default zone for needed services
   ansible.posix.firewalld:
     service: "{{ item }}"
     permanent: true
@@ -7,7 +7,7 @@
     immediate: true
   loop: "{{ needed_services }}"
 
-- name: permit traffic in default zone for needed ports
+- name: Permit traffic in default zone for needed ports
   ansible.posix.firewalld:
     port: "{{ item }}"
     permanent: true
