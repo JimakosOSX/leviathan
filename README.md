@@ -1,6 +1,5 @@
-# Ansible role to set-up an Ubuntu mail server
-Automating the installation of a mail server using Ubuntu 22.04
-
+# Ansible roles to set-up a Linux mail server
+Automating the installation of a mail server
 ## Dependencies
 Run
 
@@ -28,3 +27,4 @@ TODO 📝
 1. DKIM intergration
 2. Restore backup (tarball) if present on test folder.
 3. DMARC intergration 
+4. Add Apache installtion (with file placement)
