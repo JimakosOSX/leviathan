@@ -1,4 +1,12 @@
 ---
 - name: Preparing
   ansible.builtin.include_tasks: setup.yml
-  when: Setup
+  when: setup
+
+- name: Restore backup
+  ansible.builtin.include_tasks: restore_backup.yml
+  when: restore_backup
+
+- name: Create backup
+  ansible.builtin.include_tasks: create_backup.yml
+  when: create_backup

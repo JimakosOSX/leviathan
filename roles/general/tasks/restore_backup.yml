@@ -1,0 +1,14 @@
+---
+- name: Extract mailbox backup
+  ansible.builtin.unarchive:
+    src: "{{ mailbox_filename }}"
+    dest: "/var/mail/vhosts/"
+
+- name: Tighten mail dir permissions
+  ansible.builtin.file:
+    path: /var/mail/vhosts
+    state: directory
+    recurse: true
+    mode: '2755'
+    owner: vmail
+    group: vmail

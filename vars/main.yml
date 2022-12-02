@@ -20,7 +20,10 @@ mail_users:
   - name: george
     password: verystrongpassword
     domain_id: 1
-      
+  - name: jim
+    password: verystrongpassword
+    domain_id: 1
+
 # The user used must be the same under mysql_users
 mail_unprivileged_user: { name: "mailuser", password: "verystrongpassword" }
 
@@ -33,4 +36,7 @@ mail_aliases:
 server_fqdn: "clusters.gr"
 server_name: "clusters"
 server_www_fqdn: "www.{{ server_fqdn }}"
-certbot_admin_email: "jim.makris1605@gmail.com"
+certbot_admin_email: "myadminmail@gmail.com"
+
+# The filename of your mailbox backup 
+mailbox_filename: "mailbox.gz"
