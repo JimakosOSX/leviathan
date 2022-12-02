@@ -4,17 +4,6 @@
     name: dovecot
     state: stopped
 
-- name: Install dovecot.conf
-  ansible.builtin.template:
-    src: dovecot.conf.j2
-    dest: /etc/dovecot/dovecot.conf
-
-- name: Replace mail_location in 10-mail.conf
-  ansible.builtin.lineinfile:
-    path: /etc/dovecot/conf.d/10-mail.conf
-    regexp: '^mail_location.*'
-    line: 'mail_location = maildir:/var/mail/vhosts/%d/%n/'
-
 - name: Ensure group vmail exists
   ansible.builtin.group:
     name: vmail
@@ -30,13 +19,27 @@
     expires: -1
     home: /var/mail
 
+- name: Install dovecot.conf
+  ansible.builtin.template:
+    src: dovecot.conf.j2
+    dest: /etc/dovecot/dovecot.conf
+    owner: vmail
+    group: dovecot
+    mode: '0640'
+
+- name: Replace mail_location in 10-mail.conf
+  ansible.builtin.lineinfile:
+    path: /etc/dovecot/conf.d/10-mail.conf
+    regexp: '^mail_location.*'
+    line: 'mail_location = maildir:/var/mail/vhosts/%d/%n/'
+
 - name: Create vhosts directory
   ansible.builtin.file:
     path: "/var/mail/vhosts/{{ server_fqdn }}"
     state: directory
     owner: vmail
     group: vmail
-    recurse: yes
+    recurse: true
 
 - name: Disable plaintext_auth
   ansible.builtin.lineinfile:
@@ -60,17 +63,23 @@
   ansible.builtin.template:
     src: auth-sql.conf.ext.j2
     dest: /etc/dovecot/conf.d/auth-sql.conf.ext
+    owner: vmail
+    group: dovecot
+    mode: '0640'
 
 - name: Install dovecot-sql.conf.ext
   ansible.builtin.template:
     src: dovecot-sql.conf.ext.j2
     dest: /etc/dovecot/dovecot-sql.conf.ext
+    owner: vmail
+    group: dovecot
+    mode: '0640'
 
 - name: Tighten dovecot dir permissions
   ansible.builtin.file:
     path: /etc/dovecot
     state: directory
-    recurse: yes
+    recurse: true
     mode: '0750'
     owner: vmail
     group: dovecot
@@ -79,6 +88,9 @@
   ansible.builtin.template:
     src: 10-master.conf.j2
     dest: /etc/dovecot/conf.d/10-master.conf
+    owner: vmail
+    group: dovecot
+    mode: '0640'
 
 - name: Require SSL/TLS support
   ansible.builtin.lineinfile:
@@ -102,4 +114,3 @@
   ansible.builtin.systemd:
     name: dovecot
     state: restarted
-
