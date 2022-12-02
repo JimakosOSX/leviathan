@@ -1,6 +1,6 @@
 ---
 - name: Stop postfix
-  systemd:
+  ansible.builtin.systemd:
     name: postfix
     state: stopped
 
@@ -8,37 +8,55 @@
   ansible.builtin.template: 
     src: main.cf.j2
     dest: /etc/postfix/main.cf
+    mode: '0640'
+    owner: root
+    group: postfix
 
 - name: Install mysql-virtual-mailbox-domains.cf
   ansible.builtin.template:
     src: mysql-virtual-mailbox-domains.cf.j2
     dest: /etc/postfix/mysql-virtual-mailbox-domains.cf
+    mode: '0640'
+    owner: root
+    group: postfix
 
 - name: Install mysql-virtual-mailbox-maps.cf
   ansible.builtin.template:
     src: mysql-virtual-mailbox-maps.cf.j2
     dest: /etc/postfix/mysql-virtual-mailbox-maps.cf
+    mode: '0640'
+    owner: root
+    group: postfix
 
 - name: Install mysql-virtual-alias-maps.cf
   ansible.builtin.template:
     src: mysql-virtual-alias-maps.cf.j2
     dest: /etc/postfix/mysql-virtual-alias-maps.cf
+    mode: '0640'
+    owner: root
+    group: postfix
 
 - name: Install mysql-virtual-mailbox-maps.cf
   ansible.builtin.template:
     src: mysql-virtual-email2email.cf.j2
     dest: /etc/postfix/mysql-virtual-email2email.cf
+    mode: '0640'
+    owner: root
+    group: postfix
 
 - name: Install master.cf
   ansible.builtin.template:
     src: master.cf.j2
     dest: /etc/postfix/master.cf
+    mode: '0640'
+    owner: root
+    group: postfix
 
 - name: Tighten postfix dir permissions
   ansible.builtin.file:
     path: /etc/postfix
     state: directory
-    recurse: yes
+    recurse: true
     mode: '0750'
     owner: root
     group: postfix

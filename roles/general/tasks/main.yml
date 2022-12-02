@@ -2,4 +2,3 @@
 - name: Preparing
   ansible.builtin.include_tasks: setup.yml
   when: Setup
-
