@@ -46,6 +46,7 @@
     name: "{{ item }}"
     state: stopped
   loop: "{{ services }}"
+  when: not le_cert.stat.exists and not le_cert_2.stat.exists
 
 - name: Generate new certificate if one doesn't exist.
   ansible.builtin.command: "certbot certonly --standalone --noninteractive --agree-tos --email {{ certbot_admin_email }} -d {{ server_www_fqdn }},{{ server_fqdn }}"

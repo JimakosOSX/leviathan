@@ -3,13 +3,16 @@
   community.general.archive:
     path: "/var/mail/vhosts/{{ server_fqdn }}"
     dest: "/root/{{ mailbox_filename }}"
+    owner: root
+    group: root
+    mode: '0640'
 
 - name: Store mailbox tarball locally
   ansible.builtin.fetch:
     src: "/root/{{ mailbox_filename }}"
     dest: "./{{ mailbox_filename }}"
 
-- name: remove mailbox tarball from server
+- name: Remove mailbox tarball from server
   ansible.builtin.file:
     path: "/root/{{ mailbox_filename }}"
     state: absent
