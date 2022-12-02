@@ -24,8 +24,8 @@ compatibility_level = 2
 
 
 # TLS parameters
-smtpd_tls_cert_file=/etc/letsencrypt/live/{{ server_www_fqdn }}/fullchain.pem
-smtpd_tls_key_file=/etc/letsencrypt/live/{{ server_www_fqdn }}/privkey.pem
+smtpd_tls_cert_file={{ letsencrypt_path }}/fullchain.pem
+smtpd_tls_key_file={{ letsencrypt_path }}/privkey.pem
 smtpd_use_tls=yes
 smtpd_tls_auth_only = yes
 smtp_tls_security_level = may

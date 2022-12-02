@@ -20,10 +20,26 @@
     insertafter: '^127.0.0.1 localhost$'
     line: "{{ ansible_ssh_host }} {{ server_fqdn }} {{ server_name }}"
 
-- name: Check if certificate exists
+- name: Check if certificate exists (FQDN)
   ansible.builtin.stat:
     path: "/etc/letsencrypt/live/{{ server_www_fqdn }}/cert.pem"
   register: le_cert
+
+- name: Set letsencrypt path (fqdn)
+  ansible.builtin.set_fact:
+    letsencrypt_path: "/etc/letsencrypt/live/{{ server_www_fqdn }}"
+  when: le_cert.stat.exists
+
+- name: Check if certificate exists (www)
+  ansible.builtin.stat:
+    path: "/etc/letsencrypt/live/{{ server_fqdn }}/cert.pem"
+  register: le_cert_2
+  when: not le_cert.stat.exists 
+
+- name: Set letsencrypt path (www)
+  ansible.builtin.set_fact:
+    letsencrypt_path: "/etc/letsencrypt/live/{{ server_fqdn }}"
+  when: le_cert_2.stat.exists
 
 - name: Stop services for certbot
   ansible.builtin.systemd:
@@ -33,7 +49,7 @@
 
 - name: Generate new certificate if one doesn't exist.
   ansible.builtin.command: "certbot certonly --standalone --noninteractive --agree-tos --email {{ certbot_admin_email }} -d {{ server_www_fqdn }},{{ server_fqdn }}"
-  when: not le_cert.stat.exists 
+  when: not le_cert.stat.exists and not le_cert_2.stat.exists
 
 - name: Postfix configuration (debconf)
   ansible.builtin.debconf:
