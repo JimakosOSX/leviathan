@@ -40,6 +40,6 @@
     state: directory
     recurse: yes
     mode: '0750'
-    owner: postfix
+    owner: root
     group: postfix
   notify: Restart postfix

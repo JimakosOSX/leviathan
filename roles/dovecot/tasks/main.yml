@@ -90,13 +90,13 @@
   ansible.builtin.lineinfile:
     path: /etc/dovecot/conf.d/10-ssl.conf
     regexp: '^ssl_cert =.*'
-    line: 'ssl_cert = </etc/letsencrypt/live/{{ server_www_fqdn }}/fullchain.pem'
+    line: 'ssl_cert = <{{ letsencrypt_path }}/fullchain.pem'
 
 - name: Change SSL key
   ansible.builtin.lineinfile:
     path: /etc/dovecot/conf.d/10-ssl.conf
     regexp: '^ssl_key =.*'
-    line: 'ssl_key = </etc/letsencrypt/live/{{ server_www_fqdn }}/privkey.pem'
+    line: 'ssl_key = <{{ letsencrypt_path }}/privkey.pem'
 
 - name: Restart dovecot
   ansible.builtin.systemd:
