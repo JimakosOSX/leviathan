@@ -1,5 +1,7 @@
 # Ansible roles to set-up a Linux mail server
 Automating the installation of a mail server
+
+![ansible lint](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
 ## Dependencies
 Run
 
