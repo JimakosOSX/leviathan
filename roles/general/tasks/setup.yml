@@ -20,23 +20,23 @@
     insertafter: '^127.0.0.1 localhost$'
     line: "{{ ansible_ssh_host }} {{ server_fqdn }} {{ server_name }}"
 
-- name: Check if certificate exists (FQDN)
+- name: Check if certificate exists (WWW)
   ansible.builtin.stat:
     path: "/etc/letsencrypt/live/{{ server_www_fqdn }}/cert.pem"
   register: le_cert
 
-- name: Set letsencrypt path (fqdn)
+- name: Set letsencrypt path (WWW)
   ansible.builtin.set_fact:
     letsencrypt_path: "/etc/letsencrypt/live/{{ server_www_fqdn }}"
   when: le_cert.stat.exists
 
-- name: Check if certificate exists (www)
+- name: Check if certificate exists (FQDN)
   ansible.builtin.stat:
     path: "/etc/letsencrypt/live/{{ server_fqdn }}/cert.pem"
   register: le_cert_2
   when: not le_cert.stat.exists 
 
-- name: Set letsencrypt path (www)
+- name: Set letsencrypt path (FQDN)
   ansible.builtin.set_fact:
     letsencrypt_path: "/etc/letsencrypt/live/{{ server_fqdn }}"
   when: le_cert_2.stat.exists
@@ -62,3 +62,10 @@
 # This is needed after debconf for the settings to be applied
 - name: Apply debconf changes
   ansible.builtin.command: "dpkg-reconfigure -f noninteractive postfix"
+
+- name: Start services
+  ansible.builtin.systemd:
+    name: "{{ item }}" 
+    state: started
+    enabled: true
+  loop: "{{ services }}"
