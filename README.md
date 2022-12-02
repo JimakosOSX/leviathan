@@ -16,12 +16,11 @@ Postfix, Dovecot, MariaDB, Let's Encrypt, Apache
 
 
 ## Information
-Testing this on Debian 11 x64.
+Testing this on Debian & Ubuntu
 
 TODO 📝
 
 1. DKIM intergration
-2. Restore backup (tarball) if present on test folder.
-3. DMARC intergration 
-4. Add Apache installtion (with file placement)
-5. Add GitHub CI configuration
+2. DMARC intergration 
+3. Add Apache installtion (with file placement)
+4. Add GitHub CI configuration
