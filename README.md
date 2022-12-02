@@ -22,7 +22,7 @@ Postfix, Dovecot, MariaDB, Let's Encrypt, Apache
 ## Information
 Testing this on Debian 11 x64.
 
-Status: Working ✅ 
+![ansible lint](https://github.com/JimakosOSX/leviathan/actions/workflows/main.yml/badge.svg)
 
 TODO 📝
 
