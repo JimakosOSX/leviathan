@@ -2,9 +2,6 @@
 
 
 ## Dependencies
-Run
-
-`ansible-galaxy collection install geerlingguy.mysql`
 
 Fill `vars/main.yml` with your own credentials.
 
