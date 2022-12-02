@@ -1,7 +1,6 @@
 # Ansible roles to set-up a Linux mail server
 Automating the installation of a mail server
 
-![ansible lint](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
 ## Dependencies
 Run
 
@@ -22,7 +21,7 @@ Postfix, Dovecot, MariaDB, Let's Encrypt, Apache
 ## Information
 Testing this on Debian 11 x64.
 
-![ansible lint](https://github.com/JimakosOSX/leviathan/actions/workflows/main.yml/badge.svg)
+![ansible lint](https://github.com/JimakosOSX/leviathan/actions/workflows/blank.yml/badge.svg)
 
 TODO 📝
 
