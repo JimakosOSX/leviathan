@@ -10,8 +10,9 @@
 - name: Store mailbox tarball locally
   ansible.builtin.fetch:
     src: "/root/{{ mailbox_filename }}"
-    dest: "./{{ mailbox_filename }}"
-
+    dest: "{{ mailbox_filename }}"
+    flat: true
+    
 - name: Remove mailbox tarball from server
   ansible.builtin.file:
     path: "/root/{{ mailbox_filename }}"
