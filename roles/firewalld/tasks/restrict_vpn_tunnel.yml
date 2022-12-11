@@ -1,0 +1,9 @@
+---
+- name: Allow SSH from ZeroTier
+  ansible.posix.firewalld:
+    rich_rule: rule family="ipv4" source address="{{ zerotier_source_address }}" service name="ssh" accept limit value="1/m"
+    zone: drop
+    permanent: yes
+    immediate: yes
+    state: enabled
+

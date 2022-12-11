@@ -1,0 +1,4 @@
+---
+- name: Restart firewalld
+  ansible.builtin.command: firewall-cmd --reload
+  listen: Restart firewalld

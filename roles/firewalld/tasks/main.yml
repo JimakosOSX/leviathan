@@ -1,16 +1,7 @@
 ---
-- name: Permit traffic in default zone for needed services
-  ansible.posix.firewalld:
-    service: "{{ item }}"
-    permanent: true
-    state: enabled
-    immediate: true
-  loop: "{{ needed_services }}"
+- name: Basic firewall setup
+  ansible.builtin.include_tasks: restrict_basic.yml
 
-- name: Permit traffic in default zone for needed ports
-  ansible.posix.firewalld:
-    port: "{{ item }}"
-    permanent: true
-    state: enabled
-    immediate: true
-  loop: "{{ needed_ports }}"
+- name: firewall setup for zerotier-installed servers
+  ansible.builtin.include_tasks: restrict_vpn_tunnel.yml
+  when: vpn_tunnel_enabled
