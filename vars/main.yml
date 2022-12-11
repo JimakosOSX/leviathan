@@ -40,3 +40,6 @@ certbot_admin_email: "myadminmail@gmail.com"
 
 # The filename of your mailbox backup 
 mailbox_filename: "mailbox.gz"
+
+# Change this if you want to use the related role
+zerotier_network_id: 0000000000 
