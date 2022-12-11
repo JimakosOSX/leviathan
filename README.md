@@ -23,5 +23,5 @@ TODO 📝
 1. DKIM intergration
 2. DMARC intergration 
 3. Add Apache installtion (with file placement)
-4. Add zerotier-one role
+4. Add zerotier-one role ✅
 5. Add GitHub CI configuration
