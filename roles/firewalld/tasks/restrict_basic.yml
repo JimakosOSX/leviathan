@@ -1,0 +1,40 @@
+---
+- name: If VPN is not used, SSH should be opened
+  ansible.builtin.set_fact:
+    needed_services: "{{ default_services + ['ssh'] }}"
+  when: not vpn_tunnel_enabled
+
+- name: If VPN is used, SSH should not be opened
+  ansible.builtin.set_fact:
+    needed_services: "{{ default_services }}"
+  when: vpn_tunnel_enabled
+
+- name: Set default zone to 'drop'
+  ansible.builtin.command: firewall-cmd --set-default-zone=drop
+  register: default_zone_set
+  changed_when:
+    - '"ZONE_ALREADY_SET" not in default_zone_set.stderr'
+
+- name: Change DROP zone settings
+  ansible.posix.firewalld:
+    zone: drop
+    state: enabled
+    permanent: yes
+    icmp_block_inversion: yes
+    
+- name: Permit traffic in drop zone for needed services
+  ansible.posix.firewalld:
+    zone: drop
+    service: "{{ item }}"
+    permanent: true
+    state: enabled
+  loop: "{{ needed_services }}"
+
+- name: Permit traffic in drop zone for needed ports
+  ansible.posix.firewalld:
+    zone: drop
+    port: "{{ item }}"
+    permanent: true
+    state: enabled
+  loop: "{{ needed_ports }}"
+

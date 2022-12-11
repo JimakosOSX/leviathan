@@ -43,3 +43,4 @@ mailbox_filename: "mailbox.gz"
 
 # Change this if you want to use the related role
 zerotier_network_id: 0000000000 
+zerotier_source_address: "172.22.0.0/16"
