@@ -1,0 +1,30 @@
+---
+- name: Download zerotier install script
+  ansible.builtin.get_url:
+    url: https://install.zerotier.com
+    dest: /root/zerotier_install_script
+    mode: '0755'
+
+- name: Execute installation script
+  ansible.builtin.command: /bin/bash /root/zerotier_install_script
+  args:
+    creates: /root/.zerotier_installed
+
+- name: Enable zerotier one service
+  ansible.builtin.systemd:
+    name: zerotier-one
+    state: started
+    enabled: yes
+
+- name: Join zerotier network
+  ansible.builtin.command: zerotier-cli join "{{ zerotier_network_id }}"
+  args:
+    creates: /root/.zerotier_network_joined
+
+- name: Get server's zerotier address
+  ansible.builtin.command: zerotier-cli status
+  register: zerotier_address
+
+- name: Print server's zerotier address
+  ansible.builtin.debug: 
+    msg: "Status: {{ zerotier_address.stdout }}"

@@ -14,9 +14,10 @@
   vars_files:
   - ../vars/main.yml
   roles: 
-    - { role: general, setup: true }
-    - role: mariadb
-    - role: postfix
-    - role: dovecot
-    - role: firewalld
+    - role: zerotier
+    #- { role: general, setup: true }
+    #- role: mariadb
+    #- role: postfix
+    #- role: dovecot
+    #- role: firewalld
       #    - { role: general, restore_backup: true }
