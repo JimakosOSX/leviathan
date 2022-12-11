@@ -16,7 +16,7 @@ Postfix, Dovecot, MariaDB, Let's Encrypt, Apache
 
 
 ## Information
-Testing this on Debian & Ubuntu
+Testing this on Ubuntu (Always Free tier VM on Oracle Cloud)
 
 TODO 📝
 
