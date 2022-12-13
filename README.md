@@ -22,7 +22,7 @@ Testing this on Ubuntu (Always Free tier VM on Oracle Cloud)
 
 TODO 📝
 
-1. DKIM intergration
+1. DKIM intergration ✅
 2. DMARC intergration 
 3. Add Apache installtion (with file placement)
 4. Add zerotier-one role ✅

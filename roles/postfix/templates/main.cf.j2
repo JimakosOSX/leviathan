@@ -118,9 +118,10 @@ unverified_sender_reject_code = 550
 
 policyd-spf_time_limit = 3600
 
-# DKIM TODO
-#milter_protocol = 6
-#milter_default_action = accept
-#smtpd_milters = local:opendkim/opendkim.sock,local:opendmarc/opendmarc.sock
-#non_smtpd_milters = $smtpd_milters
-#message_size_limit = 52428800
+# DKIM 
+milter_protocol = 2
+milter_default_action = accept
+smtpd_milters = inet:localhost:8891
+non_smtpd_milters = $smtpd_milters
+
+message_size_limit = 52428800

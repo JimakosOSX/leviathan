@@ -13,16 +13,18 @@ packages:
   - dovecot-mysql 
   - mariadb-server
   - firewalld
+  - opendkim 
+  - opendkim-tools
+  - opendmarc
 
 services:
   - apache2
   - postfix
   - dovecot
   - mariadb
-postfix_debconf_params:
-  - { question: 'postfix/main_mailer_type', value: "Internet Site" }
-  - { question: 'postfix/mailname', value: "{{ server_fqdn }}" }
+  - opendkim
+  - opendmarc
 
-setup: false
+setup: true
 restore_backup: false
 create_backup: false

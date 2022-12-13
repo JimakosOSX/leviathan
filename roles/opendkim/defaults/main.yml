@@ -1,0 +1,8 @@
+---
+dkim_key_file: "/etc/postfix/dkim.key"
+
+# This directory is used to track each month's keys.
+# Creating new DKIM keys is recommended at least one per two months
+# So, running this monthly puts us on a safe spot.
+dkim_temp_keys_dir: "/root/.dkim-{{ ansible_date_time.month }}-{{ ansible_date_time.year }}"
+

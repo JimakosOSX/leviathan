@@ -14,9 +14,11 @@
   vars_files:
   - ../vars/main.yml
   roles: 
-    - { role: general, setup: true, restore_backup: False }
-    - role: mariadb
-    - role: postfix
-    - role: dovecot
-    - role: zerotier
-    - { role: firewalld, vpn_tunnel_enabled: True }
+    #- { role: general }
+    #- role: mariadb
+    #- role: postfix
+    #- role: dovecot
+    #- role: zerotier
+    #- { role: firewalld, vpn_tunnel_enabled: True }
+    #- role: opendkim
+    - role: opendmarc
