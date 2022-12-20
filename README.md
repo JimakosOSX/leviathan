@@ -44,7 +44,7 @@ I usually have no problems with the following DNS setup;
 - MX record showing mails should be handled by FQDN 
 - MX record showing mails for mail.FQDN should be handled by FQDN 
 - TXT record from \_dmarc.FQDN with value "v=DMARC1; p=reject; rua=mailto:webadmin@FQDN"
-- TXT record based on mail.txt file (mail selector is used on DKIM so hostname mail._domainkey.FQDN and value based on the txt file should work)
+- TXT record based on mail.txt file (check the mail.txt file after running)
 - PTR record (Digital Ocean does it automatically if you use FQDN as Droplet name)
 
 
