@@ -1,7 +1,13 @@
 ---
+- name: Install firewalld
+  ansible.builtin.package:
+    name: firewalld
+    state: present
+
 - name: Basic firewall setup
   ansible.builtin.include_tasks: restrict_basic.yml
 
 - name: firewall setup for zerotier-installed servers
   ansible.builtin.include_tasks: restrict_vpn_tunnel.yml
   when: vpn_tunnel_enabled
+  

@@ -1,0 +1,3 @@
+mail._domainkey	IN	TXT	( "v=DKIM1; h=sha256; k=rsa; t=y; "
+	  "p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx8YA4Ga495+MUl3FZW36j3Vx1yoe/BxFwNiewglAfvmuCdDA+zzeyMu01DE6jxucFhAm+2viZZ5Ayio3CWPKfRUXFLCLtEElpzNWUkvX8Ye1Bi3NX7BaQhAgWi46H4pXeDQIftg+S5I4prwPAbZqy8uy0b8eCC0D2G/lFZJZfrAgbghGh+1ypLY4QsXwdeq0EcrSEWomfh0nYF"
+	  "O47fI8AJ+ws55Nl/PgLWl9iPG4Wm8Mbm5Y1/ZAE6mEAuIIJJH3EBqpH0HULf1MWsjswzV6BqE0/31B5Quc+UiZSxtd18m+YimNopR8uwfcvehUooHH2umy9M1HaVaGN6gy/kWHFwIDAQAB" )  ; ----- DKIM key mail for clusters.gr

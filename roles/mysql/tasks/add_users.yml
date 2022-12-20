@@ -1,0 +1,8 @@
+---
+- name: Create virtual users
+  community.mysql.mysql_query:
+    login_db: "{{ mysql_database }}"
+    single_transaction: true
+    query:
+      - USE mailserver;
+      - INSERT INTO virtual_users (domain_id, password, email) SELECT '{{ item.domain_id }}', TO_BASE64(UNHEX(SHA2('{{ item.password }}', 512))), '{{ item.name }}@{{ server_fqdn }}' WHERE NOT EXISTS (SELECT email FROM mailserver.virtual_users WHERE email = '{{ item.name }}@{{ server_fqdn }}');

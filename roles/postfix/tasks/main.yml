@@ -56,6 +56,14 @@
     owner: root
     group: postfix
 
+- name: Install smtp_reply_filter
+  ansible.builtin.template:
+    src: smtp_reply_filter.j2
+    dest: /etc/postfix/smtp_reply_filter/
+    mode: '0640'
+    owner: root
+    group: postfix
+
 - name: Install master.cf
   ansible.builtin.template:
     src: master.cf.j2

@@ -1,21 +1,22 @@
 ---
-- name: Ensure MySQL databases are present
-  ansible.builtin.include_tasks: databases.yml
-  
+#- name: Install /root/.my.cnf
+#  ansible.builtin.template:
+#    src: root-my.cnf.j2
+#    dest: /root/.my.cnf
+
 - name: Ensure MySQL users are present
   ansible.builtin.include_tasks: users.yml
 
+- name: Ensure MySQL databases are present
+  ansible.builtin.include_tasks: databases.yml
+ 
 - name: Init tables
   ansible.builtin.include_tasks: init_tables.yml
 
 - name: Add users
   ansible.builtin.include_tasks: add_users.yml
   loop: "{{ mail_users }}"
-  loop_control:
-    loop_var: outer_item
 
 - name: Add aliases 
   ansible.builtin.include_tasks: add_aliases.yml
   loop: "{{ mail_aliases }}"
-  loop_control:
-    loop_var: outer_item
