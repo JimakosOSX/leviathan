@@ -1,0 +1,80 @@
+---
+- name: Stop OpenDKIM
+  ansible.builtin.systemd:
+    name: opendkim
+    state: stopped
+
+- name: DKIM - Add Domain
+  ansible.builtin.lineinfile:
+    path: /etc/opendkim.conf
+    insertafter: '^#Domain.*'
+    line: "Domain			{{ server_fqdn }}"
+
+- name: DKIM - Add Keyfile
+  ansible.builtin.lineinfile:
+    path: /etc/opendkim.conf
+    insertafter: '^#KeyFile.*'
+    line: "KeyFile			{{ dkim_key_file }}"
+
+- name: DKIM - Add Selector
+  ansible.builtin.lineinfile:
+    path: /etc/opendkim.conf
+    insertafter: '^#Selector.*'
+    line: "Selector			mail"
+
+- name: DKIM - Add Socket
+  ansible.builtin.lineinfile:
+    path: /etc/opendkim.conf
+    insertafter: '^#Selector.*'
+    line: "Selector			mail"
+
+- name: DKIM - Comment out default socket
+  ansible.builtin.lineinfile:
+    path: /etc/opendkim.conf
+    regexp: 'Socket			local:/run/opendkim/opendkim.sock'
+    line: '#Socket			local:/run/opendkim/opendkim.sock'
+
+- name: DKIM - Enable needed socket
+  ansible.builtin.lineinfile:
+    path: /etc/opendkim.conf
+    regexp: '#Socket			inet:8891'
+    line: 'Socket               inet:8891'
+
+- name: Create directory for DKIM keys (monthly)
+  ansible.builtin.file:
+    path: "{{ dkim_temp_keys_dir }}"
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: Generate DKIM keys
+  command: "opendkim-genkey -t -s mail -d {{ server_fqdn }} --directory={{ dkim_temp_keys_dir }}"
+  args:
+    creates: "{{ dkim_temp_keys_dir }}/mail.txt"
+
+- name: Copy DKIM private key to location
+  ansible.builtin.copy:
+    remote_src: true
+    src: "{{ dkim_temp_keys_dir }}/mail.private"
+    dest: "{{ dkim_key_file }}"
+
+- name: Get DKIM TXT record
+  ansible.builtin.fetch:
+    src: "{{ dkim_temp_keys_dir }}/mail.txt"
+    dest: ./
+    flat: yes
+
+- name: Notify user about DKIM TXT records
+  ansible.builtin.debug:
+    msg:  
+      - "Your DKIM TXT records for mail._domainkey.{{ server_fqdn }} are under ./mail.txt"
+
+- name: Tighten private key (DKIM)
+  ansible.builtin.file:
+    path: "{{ dkim_key_file }}"
+    mode: '0600'
+    owner: opendkim
+    group: opendkim
+  notify: Restart OpenDKIM
+
