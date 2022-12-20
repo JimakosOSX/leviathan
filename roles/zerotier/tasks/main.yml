@@ -2,11 +2,11 @@
 - name: Download zerotier install script
   ansible.builtin.get_url:
     url: https://install.zerotier.com
-    dest: /root/zerotier_install_script
+    dest: /tmp/zerotier_install_script
     mode: '0755'
 
 - name: Execute installation script
-  ansible.builtin.command: /bin/bash /root/zerotier_install_script > /root/.zerotier_installed
+  ansible.builtin.command: /bin/bash /tmp/zerotier_install_script > /root/.zerotier_installed
   args:
     creates: /root/.zerotier_installed
 

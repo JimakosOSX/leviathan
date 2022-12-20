@@ -1,2 +1,18 @@
 ---
-
+opendmarc_debconf_params:
+  - { question: 'opendmarc/db/dbname', value: 'opendmarc' }
+  - { question: 'opendmarc/remote/host', value: 'localhost' }
+  - { question: 'opendmarc/internal/reconfiguring', value: 'false' }
+  - { question: 'opendmarc/db/app-user', value: 'opendmarc@localhost' }
+  - { question: 'opendmarc/remove-error', value: 'abort' }
+  - { question: 'opendmarc/internal/skip-preseed', value: 'false' }
+  - { question: 'opendmarc/mysql/admin-user', value: 'debian-sys-maint' }
+  - { question: 'opendmarc/purge', value: 'false' }
+  - { question: 'opendmarc/dbconfig-install', value: 'true' }
+  - { question: 'opendmarc/database-type', value: 'mysql' }
+  - { question: 'opendmarc/dbconfig-remove', value: 'true' }
+  - { question: 'opendmarc/upgrade-backup', value: 'true' }
+  - { question: 'opendmarc/dbconfig-reinstall', value: 'false' }
+  - { question: 'opendmarc/mysql/method', value: 'Unix socket' }
+  - { question: 'opendmarc/mysql/authplugin', value: 'default' }
+  - { question: 'opendmarc/missing-db-package-error', value: 'abort' }

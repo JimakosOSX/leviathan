@@ -5,17 +5,24 @@
 
 Fill `vars/main.yml` with your own credentials.
 
-Fill `test/inventory` with the desired server.
+Fill `inventory` with the desired server.
 
 Install geerlinyguy's MySQL role `ansible-galaxy install geerlingguy.mysql`
 
-Run `test/test.yml`.
+Run `test.yml`.
 
 If you want ZeroTier, after setting everything up, change your `test/inventory` address to point to the internal one.
 
 ## Current Feautures
 
-Postfix, Dovecot, MySQL, Let's Encrypt, OpenDKIM, Firewalld, Zerotier (optional)
+- Postfix (sending)
+- Dovecot (receiving + local mail)
+- MySQL (Keeping e-mail addresses, aliases, domains)
+- Let's Encrypt (TLS/SSL free certificate)
+- OpenDKIM (Easy monthly key rotation - just re-run the role)
+- OpenDMARC ( 👻 seems to work fine)
+- Firewalld (restricting un-needed network traffic)
+- Zerotier (Free VPN tunnel - optional role)
 
 
 ## Information
@@ -23,9 +30,8 @@ Testing this on Ubuntu 22.04.1 LTS (Digital Ocean Droplet)
 
 TODO 📝
 
-1. DMARC intergration 
-2. Add Apache installtion (with file placement)
-3. Add GitHub CI configuration
+1. Add Apache installation (with file placement)
+2. Add GitHub CI configuration
 
 
 ## Notes on DNS Setup

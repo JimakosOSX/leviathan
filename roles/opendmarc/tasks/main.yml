@@ -1,0 +1,70 @@
+---
+- name: OpenDMARC configuration (debconf)
+  ansible.builtin.debconf:
+    name: opendmarc
+    question: "{{ item.question }}"
+    value: "{{ item.value }}"
+    vtype: string
+  loop: "{{ opendmarc_debconf_params }}"
+
+# This is needed after debconf for the settings to be applied
+- name: Apply debconf changes
+  ansible.builtin.command: "dpkg-reconfigure -f noninteractive opendmarc"
+
+- name: Stop OpenDMARC
+  systemd:
+    name: opendmarc
+    state: stopped
+
+- name: DMARC - Add AuthservID
+  ansible.builtin.lineinfile:
+    path: /etc/opendmarc.conf
+    insertafter: '^# AuthservID name.*'
+    line: "AuthservID HOSTNAME"
+
+- name: DMARC - Add TrustedAuthservIDs 
+  ansible.builtin.lineinfile:
+    path: /etc/opendmarc.conf
+    insertafter: '^# TrustedAuthservIDs HOSTNAME.*'
+    line: 'TrustedAuthservIDs HOSTNAME'
+
+- name: DMARC - Enable RejectFailures
+  ansible.builtin.lineinfile:
+    path: /etc/opendmarc.conf
+    insertafter: '^# RejectFailures false.*'
+    line: 'RejectFailures false'
+
+
+- name: DMARC - Change Socket
+  ansible.builtin.lineinfile:
+    path: /etc/opendmarc.conf
+    regexp: '^Socket local:/run/opendmarc/opendmarc.sock.*'
+    line: 'Socket inet:8893@localhost'
+
+- name: DMARC - Add IgnoreAuthenticatedClients
+  ansible.builtin.lineinfile:
+    path: /etc/opendmarc.conf
+    insertafter: '^# TrustedAuthservIDs HOSTNAME.*'
+    line: 'IgnoreAuthenticatedClients true'
+
+- name: Tighten OpenDMARC dir permissions
+  ansible.builtin.file:
+    path: /var/spool/postfix/opendmarc/
+    state: directory
+    recurse: true
+    mode: '0750'
+    owner: opendmarc
+    group: opendmarc
+
+- name: Add user postfix to group opendmarc
+  ansible.builtin.user:
+    name: postfix
+    groups: opendmarc
+    append: yes
+
+- name: Start OpenDMARC
+  systemd:
+    name: opendmarc
+    state: started
+
+

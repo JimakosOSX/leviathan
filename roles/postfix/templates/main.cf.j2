@@ -19,7 +19,7 @@ readme_directory = no
 
 # See http://www.postfix.org/COMPATIBILITY_README.html -- default to 2 on
 # fresh installs.
-compatibility_level = 2
+compatibility_level = 3.6
 
 
 
@@ -116,15 +116,16 @@ unknown_hostname_reject_code = 550
 unverified_recipient_reject_code = 550
 unverified_sender_reject_code = 550
 
+# SPF
 policyd-spf_time_limit = 3600
 
-# DKIM 
-milter_protocol = 2
-milter_default_action = accept
-smtpd_milters = inet:localhost:8891
-non_smtpd_milters = $smtpd_milters
-
 message_size_limit = 52428800
+
+# DKIM and DMARC
+milter_protocol = 6
+milter_default_action = accept
+smtpd_milters = inet:localhost:8891, inet:localhost:8893
+non_smtpd_milters = $smtpd_milters
 
 # Gmail IPv6 retry:
 smtp_reply_filter = pcre:/etc/postfix/smtp_reply_filter
