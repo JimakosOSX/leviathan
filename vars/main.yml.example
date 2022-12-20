@@ -8,54 +8,39 @@ domains:
 
 mysql_users:
   - name: mailuser
-    password: madicetea
+    password: verystrongpassword
     priv: "mailserver.*:ALL"
 
 mysql_databases:
   - name: mailserver
 
-mysql_root_password: madicetea
+mysql_root_password: verystrongpassword
 
 mail_users:
-  - name: alex
-    password: theodosiadis
+  - name: george
+    password: verystrongpassword
     domain_id: 1
   - name: jim
-    password: Richie09111941
-    domain_id: 1
-  - name: nick
-    password: d1m@k1s
+    password: verystrongpassword
     domain_id: 1
 
 # The user used must be the same under mysql_users
-mail_unprivileged_user: { name: "mailuser", password: "madicetea" }
+mail_unprivileged_user: { name: "mailuser", password: "verystrongpassword" }
 
 # No need to use full address. The domain will be added based on domain_id.
 mail_aliases:
   - source: "postmaster"
     dest: "jim"
     domain_id: 1
-  - source: "webmaster"
-    dest: "jim"
-    domain_id: 1
-  - source: "webadmin"
-    dest: "jim"
-    domain_id: 1
-  - source: "admin"
-    dest: "jim"
-    domain_id: 1
-  - source: "jimvim2"
-    dest: "jim"
-    domain_id: 1
 
 server_fqdn: "clusters.gr"
 server_name: "clusters"
 server_www_fqdn: "www.{{ server_fqdn }}"
-certbot_admin_email: "jim.makris1605@gmail.com"
+certbot_admin_email: "myadminmail@gmail.com"
 
 # The filename of your mailbox backup 
 mailbox_filename: "mailbox.gz"
 
-# My address
-zerotier_network_id: 93afae5963ac3343
+# Change this if you want to use the related role
+zerotier_network_id: 0000000000 
 zerotier_source_address: "172.22.0.0/16"
