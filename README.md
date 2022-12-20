@@ -40,3 +40,8 @@ I usually have no problems with the following DNS setup;
 - TXT record from \_dmarc.FQDN with value "v=DMARC1; p=reject; rua=mailto:webadmin@FQDN"
 - TXT record based on mail.txt file (mail selector is used on DKIM so hostname mail._domainkey.FQDN and value based on the txt file should work)
 - PTR record (Digital Ocean does it automatically if you use FQDN as Droplet name)
+
+
+## Scores / Improvements
+Mail tester shows a 9.5 / 10 score with this configuration 🤩
+https://www.mail-tester.com/test-a53q6owhm
