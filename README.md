@@ -7,6 +7,8 @@ Fill `vars/main.yml` with your own credentials.
 
 Fill `test/inventory` with the desired server.
 
+Install geerlinyguy's MySQL role `ansible-galaxy install geerlingguy.mysql`
+
 Run `test/test.yml`.
 
 If you want ZeroTier, after setting everything up, change your `test/inventory` address to point to the internal one.
