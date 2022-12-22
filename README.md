@@ -28,6 +28,8 @@ If you use ZeroTier, after setting everything up, change your `inventory` to poi
 ## Information
 Testing this on Ubuntu 22.04.1 LTS (Digital Ocean Droplet)
 
+1vCPU / 1GB RAM should be okay to run this setup. 
+
 TODO 📝
 
 1. Add Apache installation (with file placement)
