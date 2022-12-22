@@ -20,7 +20,7 @@ If you use ZeroTier, after setting everything up, change your `inventory` to poi
 - MySQL   🐿️ Keeping e-mail addresses, aliases, domains
 - Let's Encrypt 🔐 TLS/SSL free certificate
 - OpenDKIM 🗝️ Easy monthly key rotation - just re-run the role
-- OpenDMARC 👻 seems to work fine
+- OpenDMARC 👻 Ignores checks for outgoing e-mails 
 - Firewalld 🔥🧱 restricting un-needed network traffic
 - Zerotier 🗿 Free VPN tunnel - optional role
 
