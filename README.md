@@ -11,7 +11,7 @@ Install geerlinyguy's MySQL role `ansible-galaxy install geerlingguy.mysql`
 
 Run `test.yml`.
 
-If you want ZeroTier, after setting everything up, change your `test/inventory` address to point to the internal one.
+If you use ZeroTier, after setting everything up, change your `inventory` to point to the internal one.
 
 ## Current Feautures
 
