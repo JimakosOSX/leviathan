@@ -6,7 +6,7 @@
     mode: '0755'
 
 - name: Execute installation script
-  ansible.builtin.command: /bin/bash /tmp/zerotier_install_script > /root/.zerotier_installed
+  ansible.builtin.shell: /bin/bash /tmp/zerotier_install_script > /root/.zerotier_installed
   args:
     creates: /root/.zerotier_installed
 
@@ -17,7 +17,7 @@
     enabled: yes
 
 - name: Join zerotier network
-  ansible.builtin.command: zerotier-cli join "{{ zerotier_network_id }}" > /root/.zerotier_network_joined
+  ansible.builtin.shell: zerotier-cli join "{{ zerotier_network_id }}" > /root/.zerotier_network_joined
   args:
     creates: /root/.zerotier_network_joined
 
