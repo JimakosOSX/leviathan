@@ -1,9 +1,4 @@
 ---
-#- name: Install /root/.my.cnf
-#  ansible.builtin.template:
-#    src: root-my.cnf.j2
-#    dest: /root/.my.cnf
-
 - name: Ensure MySQL users are present
   ansible.builtin.include_tasks: users.yml
 

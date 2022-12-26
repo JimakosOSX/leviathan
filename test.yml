@@ -11,7 +11,7 @@
 - hosts: new
   remote_user: root
   vars_files:
-  - ../vars/main.yml
+  - defaults/main.yml
   roles: 
     - role: general
     - role: geerlingguy.mysql
