@@ -7,7 +7,7 @@ Copy `defaults/main.yml.example` to `vars/main.yml` to use your own credentials.
 
 Fill `inventory` with the desired server.
 
-Install geerlinyguy's MySQL role `ansible-galaxy install geerlingguy.mysql`
+Install role dependencies `ansible-galaxy install -r roles/requirements.yml`
 
 Run `test.yml`.
 
