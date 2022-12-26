@@ -1,4 +1,5 @@
 /roles/geerlingguy.mysql/
 /inventory
-/vars/main.yml
+/defaults/main.yml
 **/.DS_Store
+/.DS_Store

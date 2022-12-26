@@ -3,7 +3,7 @@
 
 ## Dependencies
 
-Copy `vars/main.yml.example` to `vars/main.yml` to use your own credentials.
+Copy `defaults/main.yml.example` to `vars/main.yml` to use your own credentials.
 
 Fill `inventory` with the desired server.
 
