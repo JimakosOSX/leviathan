@@ -11,7 +11,7 @@ Install geerlinyguy's MySQL role `ansible-galaxy install geerlingguy.mysql`
 
 Run `test.yml`.
 
-If you want ZeroTier, after setting everything up, change your `test/inventory` address to point to the internal one.
+If you use ZeroTier, after setting everything up, change your `inventory` to point to the internal one.
 
 ## Current Feautures
 
@@ -20,13 +20,15 @@ If you want ZeroTier, after setting everything up, change your `test/inventory` 
 - MySQL   🐿️ Keeping e-mail addresses, aliases, domains
 - Let's Encrypt 🔐 TLS/SSL free certificate
 - OpenDKIM 🗝️ Easy monthly key rotation - just re-run the role
-- OpenDMARC 👻 seems to work fine
+- OpenDMARC 👻 Ignores checks for outgoing e-mails 
 - Firewalld 🔥🧱 restricting un-needed network traffic
 - Zerotier 🗿 Free VPN tunnel - optional role
 
 
 ## Information
 Testing this on Ubuntu 22.04.1 LTS (Digital Ocean Droplet)
+
+1vCPU / 1GB RAM should be okay to run this setup. 
 
 TODO 📝
 
