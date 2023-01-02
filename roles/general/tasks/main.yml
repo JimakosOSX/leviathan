@@ -11,6 +11,7 @@
 - name: Install dependencies
   ansible.builtin.package:
     name: 
+      - mailutils
       - certbot
       - apache2
       - python3-pymysql
