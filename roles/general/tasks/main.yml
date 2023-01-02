@@ -11,6 +11,7 @@
 - name: Install dependencies
   ansible.builtin.package:
     name: 
+      - mailutils
       - certbot
       - apache2
       - python3-pymysql
@@ -60,6 +61,21 @@
     name: "{{ item }}" 
     enabled: true
   loop: "{{ services }}"
+
+- name: Copy script that shows basic metric
+  copy: 
+    src: scripts/get_info.sh
+    dest: /root/
+    owner: root
+    group: root
+    mode: '0755'
+      
+- name: Run get_info.sh script hourly - Cron Job
+  ansible.builtin.cron:
+    name: "information script"
+    minute: "0"
+    job: "/root/get_info.sh {{ www_root }}/info"
+
 
 # Tasks for backup purposes to be included
 - name: Restore backup

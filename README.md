@@ -37,6 +37,14 @@ TODO 📝
 2. Add GitHub CI configuration
 3. Find a solution to update /etc/hosts file
 
+## Endpoints (sort of)
+Two static files are created.
+1. Under http://FQDN/vpn_address so you can easily get your IP
+2. Under http://FQDN/info a static file (hourly cron job) that gives a few basic information.
+
+## Notes on VPN Setup
+I recommend turning your network through zerotier.com to public until the installation is complete and restore to private afterwards.
+
 
 ## Notes on DNS Setup
 I usually have no problems with the following DNS setup;
