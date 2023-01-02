@@ -35,5 +35,5 @@
 
 - name: Write VPN address to public file
   copy:
-    content: "{{ vpn_address }}"
+    content: "{{ vpn_address }}\n"
     dest: "{{ www_root }}/vpn_address"
