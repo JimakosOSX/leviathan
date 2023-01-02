@@ -1,6 +1,10 @@
 ---
 # requirements.yml
-- src: https://github.com/geerlingguy/ansible-role-mysql.git
-  scm: http
-  version: master
-  name: geerlingguy.mysql
+roles:
+  - src: https://github.com/geerlingguy/ansible-role-mysql.git
+    scm: http
+    version: master
+    name: geerlingguy.mysql
+
+collections:
+  - name: ansible.posix

@@ -25,10 +25,6 @@
   ansible.builtin.command: zerotier-cli status
   register: zerotier_address
 
-- name: Print server's zerotier address
-  ansible.builtin.debug: 
-    msg: "Status: {{ zerotier_address.stdout }}"
-
 - name: Keep VPN address
   ansible.builtin.set_fact:
     vpn_address: "{{ ansible_facts[vpn_if]['ipv4']['address'] }}"
@@ -37,3 +33,9 @@
   copy:
     content: "{{ vpn_address }}\n"
     dest: "{{ www_root }}/vpn_address"
+
+- name: Print server's zerotier info
+  ansible.builtin.debug: 
+    msg: 
+      - "Status: {{ zerotier_address.stdout }}"
+      - "VPN Address: {{ vpn_address }}"

@@ -38,6 +38,10 @@ TODO 📝
 3. Find a solution to update /etc/hosts file
 
 
+## Notes on VPN Setup
+I recommend turning your network through zerotier.com to public until the installation is complete and restore to private afterwards.
+
+
 ## Notes on DNS Setup
 I usually have no problems with the following DNS setup;
 
