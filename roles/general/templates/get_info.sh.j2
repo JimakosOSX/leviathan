@@ -17,11 +17,14 @@ echo
 echo "--- IP ADDRESSES ---"
 ip -f inet a | awk '/inet / { print $2 }'
 echo
-echo "--- FREE RAM ---"
+echo "--- RAM USAGE ---"
 free -m
 echo
-echo "--- FREE DISK ---"
+echo "--- DISK USAGE ---"
 df -h /
+echo
+echo "--- MAILBOX SIZE ---"
+du -hs /var/mail/vhosts/{{ server_fqdn }}
 echo
 echo "--- Load Avg ---"
 uptime
