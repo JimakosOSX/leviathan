@@ -63,9 +63,9 @@
   loop: "{{ services }}"
 
 - name: Copy script that shows basic metric
-  copy: 
-    src: scripts/get_info.sh
-    dest: /root/
+  ansible.builtin.template: 
+    src: get_info.sh.j2
+    dest: /root/get_info.sh
     owner: root
     group: root
     mode: '0755'
