@@ -8,7 +8,7 @@ exec 1>$1 2>&1
 ####
 # Everything below will go to the file given as argument
 
-updated=$(TZ="{{ timezone }}" date)
+updated=$(TZ="{{ timezone }}" date "+%d/%m/%Y %R")
 echo "Last update: ${updated}"
 echo
 
