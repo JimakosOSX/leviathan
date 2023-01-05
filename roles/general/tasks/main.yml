@@ -62,20 +62,33 @@
     enabled: true
   loop: "{{ services }}"
 
-- name: Copy script that shows basic metric
+- name: Copy script that shows basic info (cli)
+  ansible.builtin.copy: 
+    src: files/get_info_cli.sh
+    dest: /root/get_info_cli.sh
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Template script that shows info
   ansible.builtin.template: 
     src: get_info.sh.j2
     dest: /root/get_info.sh
     owner: root
     group: root
     mode: '0755'
-      
+
 - name: Run get_info.sh script hourly - Cron Job
   ansible.builtin.cron:
     name: "information script"
     minute: "0"
     job: "/root/get_info.sh {{ www_root }}/info"
 
+- name: Run get_info_cli.sh script hourly - Cron Job
+  ansible.builtin.cron:
+    name: "information script - cli"
+    minute: "0"
+    job: "/root/get_info_cli.sh > {{ www_root }}/cli_info"
 
 # Tasks for backup purposes to be included
 - name: Restore backup

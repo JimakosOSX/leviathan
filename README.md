@@ -39,6 +39,7 @@ TODO 📝
 Two static files are created.
 1. Under http://FQDN/vpn_address so you can easily get your IP
 2. Under http://FQDN/info a static file (hourly cron job) that gives a few basic information.
+3. Under http://FQDN/cli_info a static file (hourly cron job) based on [pfetch](https://github.com/dylanaraps/pfetch)
 
 ## Notes on VPN Setup
 I recommend turning your network through zerotier.com to public until the installation is complete and restore to private afterwards.
