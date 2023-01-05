@@ -1,12 +1,3 @@
 ---
-services:
-  - apache2
-  - postfix
-  - dovecot
-  - opendkim
-  - opendmarc
-
 restore_backup: false
 create_backup: false
-
-pfetch_url: "https://raw.githubusercontent.com/dylanaraps/pfetch/master/pfetch"

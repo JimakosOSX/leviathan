@@ -15,3 +15,11 @@
   - vars/main.yml
   roles: 
     - role: general
+    - role: geerlingguy.mysql
+    - role: mysql
+    - role: postfix
+    - role: dovecot
+    - role: zerotier
+    - role: opendkim
+    - role: opendmarc
+    - { role: firewalld, vpn_tunnel_enabled: True }

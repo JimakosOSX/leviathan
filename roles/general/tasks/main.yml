@@ -10,24 +10,7 @@
 
 - name: Install dependencies
   ansible.builtin.package:
-    name: 
-      - mailutils
-      - certbot
-      - apache2
-      - python3-pymysql
-      - python3-certbot-apache
-      - postfix 
-      - postfix-policyd-spf-python
-      - postfix-mysql 
-      - postfix-pcre
-      - dovecot-core 
-      - dovecot-imapd 
-      - dovecot-pop3d 
-      - dovecot-lmtpd 
-      - dovecot-mysql 
-      - opendkim 
-      - opendkim-tools
-      - opendmarc
+    name: "{{ packages }}"
     state: present
 
 # TODO: Digital Ocean manages the /etc/hosts file. 
