@@ -1,7 +1,3 @@
 ---
-# Ports: 25, 110, 995, 993
-default_services: ["smtp", "http", "https", "pop3", "pop3s", "imaps"]
-needed_ports: ["465/tcp", "587/tcp", "143/tcp"]
-
 # By default, we assume zerotier is not going to be installed.
 vpn_tunnel_enabled: False
