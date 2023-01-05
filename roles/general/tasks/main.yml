@@ -62,13 +62,7 @@
     enabled: true
   loop: "{{ services }}"
 
-- name: Download pfetch from Github
-  ansible.builtin.get_url:
-    url: "{{ pfetch_url }}"
-    dest: /usr/local/bin/
-    mode: '0755'
-
-- name: Copy script that shows basic metric (cli)
+- name: Copy script that shows info (cli)
   ansible.builtin.copy: 
     src: files/get_info_cli.sh
     dest: /root/get_info_cli.sh
@@ -76,7 +70,7 @@
     group: root
     mode: '0755'
 
-- name: Copy script that shows basic metric
+- name: Template script that shows info
   ansible.builtin.template: 
     src: get_info.sh.j2
     dest: /root/get_info.sh
@@ -92,9 +86,9 @@
 
 - name: Run get_info_cli.sh script hourly - Cron Job
   ansible.builtin.cron:
-    name: "information script"
+    name: "information script - cli"
     minute: "0"
-    job: "/root/get_info_cli.sh {{ www_root }}/cli_info"
+    job: "/root/get_info_cli.sh > {{ www_root }}/cli_info"
 
 # Tasks for backup purposes to be included
 - name: Restore backup
