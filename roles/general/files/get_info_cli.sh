@@ -1,16 +1,6 @@
 #!/bin/sh
 #
 # pfetch - Simple POSIX sh fetch script.
-<<<<<<< HEAD
-=======
-### custom block 
-rm $1
-
-exec 3>&1 4>&2
-trap 'exec 2>&4 1>&3' 0 1 2 3
-exec 1>$1 2>&1
-### custom block
->>>>>>> 02b7a73 (changes in info script)
 
 # Wrapper around all escape sequences used by pfetch to allow for
 # greater control over which sequences are used (if any at all).
