@@ -8,8 +8,8 @@ exec 1>$1 2>&1
 ####
 # Everything below will go to the file given as argument
 
-# Get IP addresses
-echo "Last update: $(date)"
+updated=$(TZ="{{ timezone }}" date)
+echo "Last update: ${updated}"
 echo
 echo "--- Hostname ---"
 hostname
