@@ -45,6 +45,7 @@
     enabled: true
   loop: "{{ services }}"
 
+# TODO change from here
 - name: Copy script that shows basic info (cli)
   ansible.builtin.copy: 
     src: files/get_info_cli.sh
@@ -72,6 +73,7 @@
     name: "information script - cli"
     minute: "0"
     job: "/root/get_info_cli.sh > {{ www_root }}/cli_info"
+# TODO to here
 
 # Tasks for backup purposes to be included
 - name: Restore backup
