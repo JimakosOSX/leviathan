@@ -22,6 +22,7 @@
  * memory       747M / 969M
  * update       08/01/2023 15:47
  * root_percent 39%
+ * mailbox      xxx MB
  * IPs          127.0.0.1 174.138.10.122 10.18.0.5 10.110.0.2 172.22.206.75
  */
 
@@ -80,7 +81,39 @@ void checkHostEntry(struct hostent * hostentry)
         exit(1);
     }
 }
+
+void DistroName()
+{
+    system("cat /etc/issue > /tmp/.distro");
+    FILE * fp = NULL;
+    fp = fopen("/tmp/.distro", "r");
+
+    char distro[100];
+    fscanf(fp, "%s", distro);
+
+    printf("Distribution: %s\n", distro);
+}
+
 int main (int argc, const char * argv[]) {
+    
+    // hostname 
+    void checkHostName(int);
+    void checkHostEntry(struct hostent *);
+
+    char hostbuffer[256];
+    char *IPbuffer;
+    struct hostent *host_entry;
+    int hostname;
+    
+    // To retrieve hostname
+    hostname = gethostname(hostbuffer, sizeof(hostbuffer));
+    checkHostName(hostname);
+    
+    // To retrieve host information
+    host_entry = gethostbyname(hostbuffer);
+    checkHostEntry(host_entry);
+    
+    printf("Hostname: %s\n", hostbuffer);
     
     // ip addresses
 
@@ -101,27 +134,17 @@ int main (int argc, const char * argv[]) {
         }
     }
 
+    printf("\nIP addresses\n\n");
     get_ip_addresses(ipv6);
 
-    // hostname 
-    void checkHostName(int);
-    void checkHostEntry(struct hostent *);
-    char hostbuffer[256];
-    char *IPbuffer;
-    struct hostent *host_entry;
-    int hostname;
-    
-    // To retrieve hostname
-    hostname = gethostname(hostbuffer, sizeof(hostbuffer));
-    checkHostName(hostname);
-    
-    // To retrieve host information
-    host_entry = gethostbyname(hostbuffer);
-    checkHostEntry(host_entry);
-    
-    printf("Hostname: %s\n", hostbuffer);
- 
+
     // linux distribution
+    void DistroName();
+
+    printf("\n");
+    DistroName();
+    printf("\n");
+
     return 0;
 }
 
