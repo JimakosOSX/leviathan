@@ -149,8 +149,7 @@ void get_ip_addresses(bool ipv6) {
 }
 
 
-void DistroName()
-{
+void DistroName() {
     system("cat /etc/issue > /tmp/.distro");
     FILE * fp = NULL;
     fp = fopen("/tmp/.distro", "r");
