@@ -1,31 +1,105 @@
+/* Trying to duplicate the get_info bash script with C. */
+
+
+#include <unistd.h>
 #include <stdio.h>      
 #include <stdlib.h>
-#include <unistd.h>
 #include <netdb.h>
-#include <sys/types.h>
-#include <sys/socket.h>
 #include <ifaddrs.h>
 #include <netinet/in.h> 
 #include <string.h> 
 #include <arpa/inet.h>
 #include <stdbool.h>
 #include <sys/utsname.h>  
+#include <ctype.h>
+#include <sys/sysinfo.h>
 
+void printmemsize(char *str, unsigned long ramsize) {
+        printf("%s %ld MB\n",str, (ramsize/1024)/1024 );
+}
 
-/* Trying to duplicate this into an ASCII result we can get
- * clusters.gr
- * os           Ubuntu 22.04.1 LTS
- * host         Droplet 20171212
- * kernel       5.15.0-56-generic
- * uptime       16d 19h 6m
- * pkgs         891
- * memory       747M / 969M
- * update       08/01/2023 15:47
- * root_percent 39%
- * mailbox      xxx MB
- * IPs          127.0.0.1 174.138.10.122 10.18.0.5 10.110.0.2 172.22.206.75
- */
+int get_ram(void) {
+        struct sysinfo info;
+        sysinfo(&info);
 
+        printmemsize("Total RAM    =", info.totalram);
+          
+   /*
+        printf("current running processes: %d\n", info.procs);
+
+        FILE * fp = NULL;
+        fp = fopen("/proc/meminfo", "r");
+    
+        char line[500];
+
+          while (fgets(line, sizeof(line), fp)) {
+          printf("%s", line); 
+          }
+
+        fclose(fp);
+    */
+        return 0;
+}
+
+int get_uptime(void) {
+
+    FILE * uptimefile;
+    char uptime_chr[28];
+    long uptime = 0;
+
+    if((uptimefile = fopen("/proc/uptime", "r")) == NULL)
+        perror("supt"), exit(EXIT_FAILURE);
+
+    fgets(uptime_chr, 12, uptimefile);
+    fclose(uptimefile);
+
+    uptime = strtol(uptime_chr, NULL, 10);
+
+    long days = uptime / (3600 * 24);
+    long hours = ( uptime / 3600 ) % 24;
+
+    printf("uptime       = %ld day(s), %ld hour(s)\n", days, hours);
+
+    return(EXIT_SUCCESS);
+}
+
+int kernel_version(void) {
+
+    struct utsname buffer;
+    char *p;
+    long ver[16];
+    int i=0;
+
+    if (uname(&buffer) != 0) {
+        perror("uname");
+        exit(EXIT_FAILURE);
+    }
+
+    printf("system name  = %s\n", buffer.sysname);
+    printf("node name    = %s\n", buffer.nodename);
+    printf("release      = %s\n", buffer.release);
+    printf("version      = %s\n", buffer.version);
+    printf("machine      = %s\n", buffer.machine);
+
+#ifdef _GNU_SOURCE
+    printf("domain name = %s\n", buffer.domainname);
+#endif
+
+    p = buffer.release;
+
+    while (*p) {
+        if (isdigit(*p)) {
+            ver[i] = strtol(p, &p, 10);
+            i++;
+        } else {
+            p++;
+        }
+    }
+
+    // printf("Kernel %ld Major %ld Minor %ld Patch %ld\n", ver[0], ver[1], ver[2], ver[3]);
+
+    return EXIT_SUCCESS;
+}
 
 void get_ip_addresses(bool ipv6) {
 
@@ -35,7 +109,7 @@ void get_ip_addresses(bool ipv6) {
 
     getifaddrs(&ifAddrStruct);
 
-       
+           
     for (ifa = ifAddrStruct; ifa != NULL; ifa = ifa->ifa_next) {
         if (!ifa->ifa_addr) {
             continue;
@@ -46,7 +120,9 @@ void get_ip_addresses(bool ipv6) {
             tmpAddrPtr=&((struct sockaddr_in *)ifa->ifa_addr)->sin_addr;
             char addressBuffer[INET_ADDRSTRLEN];
             inet_ntop(AF_INET, tmpAddrPtr, addressBuffer, INET_ADDRSTRLEN);
-            printf("%s: %s\n", ifa->ifa_name, addressBuffer); 
+
+            printf("%s ", addressBuffer);
+            // printf("\t%s: %s\n", ifa->ifa_name, addressBuffer); 
         } 
         else if (ifa->ifa_addr->sa_family == AF_INET6 && ipv6 == true) { 
             // check it is IP6
@@ -54,33 +130,16 @@ void get_ip_addresses(bool ipv6) {
             tmpAddrPtr=&((struct sockaddr_in6 *)ifa->ifa_addr)->sin6_addr;
             char addressBuffer[INET6_ADDRSTRLEN];
             inet_ntop(AF_INET6, tmpAddrPtr, addressBuffer, INET6_ADDRSTRLEN);
-            printf("%s: %s\n", ifa->ifa_name, addressBuffer); 
+            printf("%s ", addressBuffer); 
+
+            // printf("\t%s: %s\n", ifa->ifa_name, addressBuffer); 
         } 
     }
-
+    
+    printf("\n");
     if (ifAddrStruct!=NULL) freeifaddrs(ifAddrStruct);
 }
 
-
-// Returns hostname for the local computer
-void checkHostName(int hostname)
-{
-    if (hostname == -1)
-    {
-    perror("gethostname");
-    exit(1);
-    }
-}
-
-// Returns host information corresponding to host name
-void checkHostEntry(struct hostent * hostentry)
-{
-    if (hostentry == NULL)
-    {
-        perror("gethostbyname");
-        exit(1);
-    }
-}
 
 void DistroName()
 {
@@ -90,31 +149,17 @@ void DistroName()
 
     char distro[100];
     fscanf(fp, "%s", distro);
+    fclose(fp);
 
-    printf("Distribution: %s\n", distro);
+    printf("distribution = %s\n", distro);
 }
 
 int main (int argc, const char * argv[]) {
-    
-    // hostname 
-    void checkHostName(int);
-    void checkHostEntry(struct hostent *);
 
-    char hostbuffer[256];
-    char *IPbuffer;
-    struct hostent *host_entry;
-    int hostname;
-    
-    // To retrieve hostname
-    hostname = gethostname(hostbuffer, sizeof(hostbuffer));
-    checkHostName(hostname);
-    
-    // To retrieve host information
-    host_entry = gethostbyname(hostbuffer);
-    checkHostEntry(host_entry);
-    
-    printf("Hostname: %s\n", hostbuffer);
-    
+    // ram
+    int get_ram(void);
+    get_ram();
+
     // ip addresses
 
     void get_ip_addresses(bool ipv6);
@@ -134,17 +179,25 @@ int main (int argc, const char * argv[]) {
         }
     }
 
-    printf("\nIP addresses\n\n");
+    printf("IP addresses = ");
     get_ip_addresses(ipv6);
 
 
     // linux distribution
     void DistroName();
-
-    printf("\n");
     DistroName();
-    printf("\n");
 
+    // linux kernel version
+    int kernel_version(void);
+    
+    kernel_version();
+
+    // uptime
+    int get_uptime(void);
+
+    get_uptime();
+    printf("\n");
+ 
     return 0;
 }
 

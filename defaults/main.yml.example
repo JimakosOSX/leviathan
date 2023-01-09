@@ -46,3 +46,4 @@ zerotier_network_id: 0000000000
 zerotier_source_address: "172.22.0.0/16"
 
 timezone: "Europe/Athens"
+www_root: /var/www/html
