@@ -14,11 +14,6 @@
     state: present
 
 # TODO: Digital Ocean manages the /etc/hosts file. 
-#- name: Update hosts file
-#  ansible.builtin.lineinfile:
-#    path: /etc/hosts
-#    insertafter: '^127.0.0.1 localhost$'
-#    line: "{{ ansible_ssh_host }} {{ server_fqdn }} {{ server_name }}"
 
 - name: Check certbot certs
   ansible.builtin.include_tasks: certs_check.yml
