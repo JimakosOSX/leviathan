@@ -13,9 +13,17 @@
 #include <sys/utsname.h>  
 #include <ctype.h>
 #include <sys/sysinfo.h>
+#include <time.h>
 
 void printmemsize(char *str, unsigned long ramsize) {
         printf("%s %ld MB\n",str, (ramsize/1024)/1024 );
+}
+
+void get_date(void) {
+    time_t t;
+    time(&t);
+
+    printf("Last update  = %s", ctime(&t));
 }
 
 int get_ram(void) {
@@ -156,12 +164,15 @@ void DistroName()
 
 int main (int argc, const char * argv[]) {
 
+    // date and time
+    void get_date(void);
+    get_date();
+
     // ram
     int get_ram(void);
     get_ram();
 
     // ip addresses
-
     void get_ip_addresses(bool ipv6);
     bool ipv6 = false;
 
@@ -182,21 +193,17 @@ int main (int argc, const char * argv[]) {
     printf("IP addresses = ");
     get_ip_addresses(ipv6);
 
-
     // linux distribution
     void DistroName();
     DistroName();
 
     // linux kernel version
     int kernel_version(void);
-    
     kernel_version();
 
     // uptime
     int get_uptime(void);
-
     get_uptime();
-    printf("\n");
  
     return 0;
 }
