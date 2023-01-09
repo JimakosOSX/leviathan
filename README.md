@@ -34,7 +34,6 @@ TODO 📝
 1. Add Apache installation (with file placement)
 2. Add GitHub CI configuration
 3. Find a solution to update /etc/hosts file
-4. zerotier address may change - a check should be added for that
 
 ## Endpoints (sort of)
 
